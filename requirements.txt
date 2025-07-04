@@ -1,5 +1,7 @@
 # Core subset scanning library
-art>=1.18.0
+adversarial-robustness-toolbox>=1.20.0
+# Subset scanning (statistical)
+git+https://github.com/breadface/anomalous_subgroup_detection.git
 
 # Deep learning frameworks (choose one or both)
 tensorflow>=2.10.0
