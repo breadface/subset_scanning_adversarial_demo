@@ -12,6 +12,25 @@ This demo implements the complete workflow for detecting adversarial examples us
 4. **Performance Evaluation**: Comprehensive metrics and visualizations
 5. **Qualitative Analysis**: Visual evidence of subtle perturbations and detection results
 
+## 🖼️ Visual Showcase
+
+Here are some key visualizations from the demo:
+
+### Original vs Adversarial Images
+![Original vs Adversarial](screenshots/original_vs_adversarial_screenshot.png)
+
+*Shows the subtle differences between clean and adversarial images, with perturbation patterns and magnified views.*
+
+### Detection Performance
+![Detection Analysis](screenshots/detection_scores_screenshot.png)
+
+*Demonstrates how well the subset scanning detector separates clean from adversarial samples.*
+
+### Perturbation Patterns
+![Perturbation Analysis](screenshots/perturbation_analysis_screenshot.png)
+
+*Reveals systematic patterns in adversarial attacks and identifies vulnerable image regions.*
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -37,6 +56,38 @@ python showcase_subset_scanning_demo.py
 
 This will demonstrate the complete workflow and generate both quantitative and qualitative visualizations.
 
+### Interactive Visualization App
+
+For a standalone interactive visualization experience:
+
+```bash
+# Run the interactive visualization app
+python visualization_app.py
+```
+
+This app will:
+- Load real data if available, or create realistic dummy data
+- Display interactive visualizations one by one
+- Save visualizations to files
+- Provide detailed explanations for each visualization
+
+Each visualization opens in a separate window - close it to proceed to the next one.
+
+### Screenshot Demo
+
+For creating high-resolution screenshots for documentation or presentations:
+
+```bash
+# Create high-resolution screenshots
+python screenshot_demo.py
+```
+
+This will generate publication-ready screenshots in the `screenshots/` directory.
+
+### Visualization Guide
+
+For detailed information about all visualization features, customization options, and troubleshooting, see the comprehensive [Visualization Guide](VISUALIZATION_GUIDE.md).
+
 ## 📊 What You'll See
 
 The showcase demonstrates:
@@ -46,12 +97,15 @@ The showcase demonstrates:
 - **Performance Comparison**: Raw pixels vs. feature-based detection
 - **Comprehensive Metrics**: ROC AUC, precision, recall, F1-score
 - **Quantitative Visualizations**: Score distributions, ROC curves, confusion matrices
-- **Qualitative Visualizations**: Original vs adversarial images, perturbation patterns, detected anomalies
+- **Qualitative Visualizations**: Original vs adversarial images, perturbation patterns, detected anomalies (see screenshots above)
+- **Interactive Exploration**: Each visualization opens in a separate window for detailed examination
 
 ## 🏗️ Project Structure
 
 ```
 ├── showcase_subset_scanning_demo.py  # Main showcase script
+├── visualization_app.py              # Standalone interactive visualization app
+├── screenshot_demo.py                # High-resolution screenshot generator
 ├── src/
 │   ├── data/
 │   │   ├── dataset.py              # MNIST data loading
@@ -71,6 +125,9 @@ The showcase demonstrates:
 │   └── utils/
 │       ├── art_utils.py            # ART classifier utilities
 │       └── data_utils.py           # Data preparation utilities
+├── screenshots/                     # High-resolution visualization screenshots
+├── interactive_visualizations/      # Interactive visualization outputs
+├── VISUALIZATION_GUIDE.md          # Comprehensive visualization guide
 └── requirements.txt
 ```
 
@@ -162,16 +219,31 @@ PHASE 6: Qualitative Visualization
 
 The showcase generates several qualitative visualizations that provide intuitive understanding:
 
+### Interactive Display
+All visualizations are displayed interactively in separate windows, allowing you to:
+- **Zoom and pan** to examine details
+- **Save screenshots** using the plot window controls
+- **Explore different aspects** of the visualizations
+- **Close windows** to proceed to the next visualization
+
 ### 1. Original vs Adversarial Images
 - **Side-by-side comparison** of clean and perturbed images
 - **Perturbation visualization** showing the subtle differences
 - **Magnified perturbations** to highlight imperceptible changes
 - **Perturbation statistics** (L∞ and L2 norms)
 
+![Original vs Adversarial Images](screenshots/original_vs_adversarial_screenshot.png)
+
+*This visualization shows how subtle adversarial perturbations can be. The top row displays original images, the second row shows adversarial examples, the third row reveals the perturbation patterns, and the bottom row magnifies these perturbations for visibility.*
+
 ### 2. Detection Score Analysis
 - **Score distributions** for clean vs adversarial samples
 - **Box plots and violin plots** showing separation
 - **ROC curves** demonstrating detection performance
+
+![Detection Score Analysis](screenshots/detection_scores_screenshot.png)
+
+*This analysis demonstrates how well the subset scanning detector separates clean from adversarial samples. The histograms, box plots, and ROC curve show the effectiveness of the detection approach.*
 
 ### 3. Detected Anomalies
 - **True positives**: Adversarial images correctly detected
@@ -184,6 +256,10 @@ The showcase generates several qualitative visualizations that provide intuitive
 - **Average perturbation patterns** showing systematic changes
 - **Perturbation variance** highlighting consistent vs random changes
 - **Pixel-level analysis** of where perturbations occur most
+
+![Perturbation Analysis](screenshots/perturbation_analysis_screenshot.png)
+
+*This analysis reveals the systematic patterns in adversarial attacks, showing which image regions are most vulnerable and the statistical properties of perturbations across the dataset.*
 
 ## 🛠️ Usage Examples
 

@@ -9,10 +9,12 @@ import seaborn as sns
 import torch
 from sklearn.metrics import roc_curve
 import os
+import time
 
 
 def visualize_original_vs_adversarial(clean_data, adversarial_data, true_labels, 
-                                    adv_predictions, num_samples=8, save_path='original_vs_adversarial.png'):
+                                    adv_predictions, num_samples=8, save_path='original_vs_adversarial.png',
+                                    show_interactive=True):
     """
     Visualize pairs of original and adversarial images to show subtle differences.
     
@@ -23,6 +25,7 @@ def visualize_original_vs_adversarial(clean_data, adversarial_data, true_labels,
         adv_predictions: Model predictions on adversarial examples
         num_samples: Number of image pairs to show
         save_path: Path to save the visualization
+        show_interactive: Whether to display interactively
     """
     
     fig, axes = plt.subplots(4, num_samples, figsize=(20, 12))
@@ -61,13 +64,23 @@ def visualize_original_vs_adversarial(clean_data, adversarial_data, true_labels,
     cbar = plt.colorbar(im, cax=cbar_ax)
     cbar.set_label('Perturbation Magnitude', rotation=270, labelpad=15)
     
-    plt.savefig(save_path, dpi=150, bbox_inches='tight')
-    plt.show()
+    if save_path:
+        plt.savefig(save_path, dpi=150, bbox_inches='tight')
+        print(f"✓ Original vs adversarial visualization saved to {save_path}")
     
-    print(f"✓ Original vs adversarial visualization saved to {save_path}")
+    if show_interactive:
+        print("\n🖼️  Displaying Original vs Adversarial Images...")
+        print("   - Row 1: Original images with true labels")
+        print("   - Row 2: Adversarial images with model predictions")
+        print("   - Row 3: Perturbation patterns (red=positive, blue=negative)")
+        print("   - Row 4: Magnified perturbations (×5) for visibility")
+        print("   - Close the window to continue...")
+        plt.show()
+        print("✓ Visualization displayed successfully!")
 
 
-def visualize_detection_scores_distribution(scores, y_true, save_path='detection_scores_distribution.png'):
+def visualize_detection_scores_distribution(scores, y_true, save_path='detection_scores_distribution.png',
+                                          show_interactive=True):
     """
     Visualize the distribution of detection scores for clean vs adversarial samples.
     
@@ -75,6 +88,7 @@ def visualize_detection_scores_distribution(scores, y_true, save_path='detection
         scores: Detection scores from subset scanning
         y_true: True labels (0 for clean, 1 for adversarial)
         save_path: Path to save the visualization
+        show_interactive: Whether to display interactively
     """
     
     fig, axes = plt.subplots(2, 2, figsize=(15, 12))
@@ -120,14 +134,25 @@ def visualize_detection_scores_distribution(scores, y_true, save_path='detection
     
     plt.tight_layout()
     plt.suptitle('Detection Score Analysis', y=0.98, fontsize=16)
-    plt.savefig(save_path, dpi=150, bbox_inches='tight')
-    plt.show()
     
-    print(f"✓ Detection scores distribution saved to {save_path}")
+    if save_path:
+        plt.savefig(save_path, dpi=150, bbox_inches='tight')
+        print(f"✓ Detection scores distribution saved to {save_path}")
+    
+    if show_interactive:
+        print("\n📊 Displaying Detection Score Analysis...")
+        print("   - Top Left: Histogram comparison of score distributions")
+        print("   - Top Right: Box plot showing score ranges and outliers")
+        print("   - Bottom Left: Violin plot showing density distributions")
+        print("   - Bottom Right: ROC curve with AUC score")
+        print("   - Close the window to continue...")
+        plt.show()
+        print("✓ Score analysis displayed successfully!")
 
 
 def visualize_detected_anomalies(clean_data, adversarial_data, scores, y_true, 
-                               threshold_percentile=95, num_samples=12, save_path='detected_anomalies.png'):
+                               threshold_percentile=95, num_samples=12, save_path='detected_anomalies.png',
+                               show_interactive=True):
     """
     Visualize images that were detected as anomalous by the subset scanning detector.
     
@@ -139,6 +164,7 @@ def visualize_detected_anomalies(clean_data, adversarial_data, scores, y_true,
         threshold_percentile: Percentile to use as detection threshold
         num_samples: Number of samples to show
         save_path: Path to save the visualization
+        show_interactive: Whether to display interactively
     """
     
     # Determine threshold
@@ -231,13 +257,24 @@ def visualize_detected_anomalies(clean_data, adversarial_data, scores, y_true,
     
     plt.tight_layout()
     plt.suptitle('Detected Anomalies Analysis', y=0.98, fontsize=16)
-    plt.savefig(save_path, dpi=150, bbox_inches='tight')
-    plt.show()
     
-    print(f"✓ Detected anomalies visualization saved to {save_path}")
+    if save_path:
+        plt.savefig(save_path, dpi=150, bbox_inches='tight')
+        print(f"✓ Detected anomalies visualization saved to {save_path}")
+    
+    if show_interactive:
+        print("\n🔍 Displaying Detected Anomalies Analysis...")
+        print("   - Rows 1-2: Images detected as anomalous (TP=green, FP=red)")
+        print("   - Bottom Left: Histogram of detection scores")
+        print("   - Bottom Right: Score vs true label scatter plot")
+        print("   - Bottom Center: Top detected anomalies ranking")
+        print("   - Close the window to continue...")
+        plt.show()
+        print("✓ Anomaly analysis displayed successfully!")
 
 
-def visualize_perturbation_analysis(clean_data, adversarial_data, save_path='perturbation_analysis.png'):
+def visualize_perturbation_analysis(clean_data, adversarial_data, save_path='perturbation_analysis.png',
+                                  show_interactive=True):
     """
     Analyze and visualize perturbation patterns across the dataset.
     
@@ -245,6 +282,7 @@ def visualize_perturbation_analysis(clean_data, adversarial_data, save_path='per
         clean_data: Original clean images
         adversarial_data: Adversarial images
         save_path: Path to save the visualization
+        show_interactive: Whether to display interactively
     """
     
     # Calculate perturbations
@@ -304,14 +342,103 @@ def visualize_perturbation_analysis(clean_data, adversarial_data, save_path='per
     
     plt.tight_layout()
     plt.suptitle('Perturbation Analysis', y=0.98, fontsize=16)
-    plt.savefig(save_path, dpi=150, bbox_inches='tight')
-    plt.show()
     
-    print(f"✓ Perturbation analysis saved to {save_path}")
+    if save_path:
+        plt.savefig(save_path, dpi=150, bbox_inches='tight')
+        print(f"✓ Perturbation analysis saved to {save_path}")
+    
+    if show_interactive:
+        print("\n📈 Displaying Perturbation Analysis...")
+        print("   - Top Left: Distribution of L2 perturbation norms")
+        print("   - Top Center: Distribution of L∞ perturbation norms")
+        print("   - Top Right: Relationship between L2 and L∞ norms")
+        print("   - Bottom Left: Average perturbation pattern across dataset")
+        print("   - Bottom Center: Variance in perturbation patterns")
+        print("   - Bottom Right: Average perturbation magnitude by pixel position")
+        print("   - Close the window to continue...")
+        plt.show()
+        print("✓ Perturbation analysis displayed successfully!")
+
+
+def create_interactive_visualization_app(clean_data, adversarial_data, true_labels, 
+                                       adv_predictions, scores, y_true):
+    """
+    Create an interactive visualization app that allows users to explore the results.
+    
+    Args:
+        clean_data: Original clean images
+        adversarial_data: Adversarial images
+        true_labels: True labels
+        adv_predictions: Model predictions on adversarial examples
+        scores: Detection scores
+        y_true: True labels for detection evaluation
+    """
+    
+    print("\n" + "=" * 80)
+    print("🎨 INTERACTIVE VISUALIZATION APP")
+    print("=" * 80)
+    print("This app allows you to explore the adversarial detection results interactively.")
+    print("Each visualization will be displayed in a separate window.")
+    print("Close each window to proceed to the next visualization.")
+    print()
+    
+    # Create output directory for saved images
+    output_dir = 'interactive_visualizations'
+    os.makedirs(output_dir, exist_ok=True)
+    
+    # 1. Original vs Adversarial
+    print("1️⃣  Original vs Adversarial Images")
+    print("   Showing subtle perturbations and their effects...")
+    visualize_original_vs_adversarial(
+        clean_data, adversarial_data, true_labels, adv_predictions,
+        save_path=os.path.join(output_dir, 'original_vs_adversarial.png'),
+        show_interactive=True
+    )
+    
+    # 2. Detection Scores
+    print("\n2️⃣  Detection Score Analysis")
+    print("   Analyzing how well the detector separates clean from adversarial...")
+    visualize_detection_scores_distribution(
+        scores, y_true,
+        save_path=os.path.join(output_dir, 'detection_scores_distribution.png'),
+        show_interactive=True
+    )
+    
+    # 3. Detected Anomalies
+    print("\n3️⃣  Detected Anomalies")
+    print("   Exploring what the detector identified as suspicious...")
+    visualize_detected_anomalies(
+        clean_data, adversarial_data, scores, y_true,
+        save_path=os.path.join(output_dir, 'detected_anomalies.png'),
+        show_interactive=True
+    )
+    
+    # 4. Perturbation Analysis
+    print("\n4️⃣  Perturbation Analysis")
+    print("   Understanding the patterns in adversarial perturbations...")
+    visualize_perturbation_analysis(
+        clean_data, adversarial_data,
+        save_path=os.path.join(output_dir, 'perturbation_analysis.png'),
+        show_interactive=True
+    )
+    
+    print("\n" + "=" * 80)
+    print("✅ INTERACTIVE VISUALIZATION COMPLETED!")
+    print("=" * 80)
+    print("All visualizations have been displayed and saved to:")
+    print(f"   📁 {output_dir}/")
+    print()
+    print("Key insights from the visualizations:")
+    print("   • Original vs Adversarial: Shows how subtle the perturbations are")
+    print("   • Score Analysis: Demonstrates detection performance")
+    print("   • Detected Anomalies: Shows what the detector flags as suspicious")
+    print("   • Perturbation Analysis: Reveals patterns in adversarial attacks")
+    print("=" * 80)
 
 
 def create_comprehensive_qualitative_analysis(clean_data, adversarial_data, true_labels, 
-                                            adv_predictions, scores, y_true, output_dir='visualizations'):
+                                            adv_predictions, scores, y_true, output_dir='visualizations',
+                                            interactive_mode=True):
     """
     Create all qualitative visualizations in one comprehensive analysis.
     
@@ -323,46 +450,58 @@ def create_comprehensive_qualitative_analysis(clean_data, adversarial_data, true
         scores: Detection scores
         y_true: True labels for detection evaluation
         output_dir: Directory to save visualizations
+        interactive_mode: Whether to show interactive visualizations
     """
     
     # Create output directory
     os.makedirs(output_dir, exist_ok=True)
     
-    print("Creating comprehensive qualitative analysis...")
-    print("=" * 60)
-    
-    # 1. Original vs adversarial comparison
-    print("1. Creating original vs adversarial visualization...")
-    visualize_original_vs_adversarial(
-        clean_data, adversarial_data, true_labels, adv_predictions,
-        save_path=os.path.join(output_dir, 'original_vs_adversarial.png')
-    )
-    
-    # 2. Detection scores distribution
-    print("\n2. Creating detection scores distribution...")
-    visualize_detection_scores_distribution(
-        scores, y_true,
-        save_path=os.path.join(output_dir, 'detection_scores_distribution.png')
-    )
-    
-    # 3. Detected anomalies
-    print("\n3. Creating detected anomalies visualization...")
-    visualize_detected_anomalies(
-        clean_data, adversarial_data, scores, y_true,
-        save_path=os.path.join(output_dir, 'detected_anomalies.png')
-    )
-    
-    # 4. Perturbation analysis
-    print("\n4. Creating perturbation analysis...")
-    visualize_perturbation_analysis(
-        clean_data, adversarial_data,
-        save_path=os.path.join(output_dir, 'perturbation_analysis.png')
-    )
-    
-    print("\n" + "=" * 60)
-    print("✓ Comprehensive qualitative analysis completed!")
-    print(f"✓ All visualizations saved to '{output_dir}' directory")
-    print("=" * 60)
+    if interactive_mode:
+        # Use interactive app
+        create_interactive_visualization_app(
+            clean_data, adversarial_data, true_labels, adv_predictions, scores, y_true
+        )
+    else:
+        # Use batch mode (original behavior)
+        print("Creating comprehensive qualitative analysis...")
+        print("=" * 60)
+        
+        # 1. Original vs adversarial comparison
+        print("1. Creating original vs adversarial visualization...")
+        visualize_original_vs_adversarial(
+            clean_data, adversarial_data, true_labels, adv_predictions,
+            save_path=os.path.join(output_dir, 'original_vs_adversarial.png'),
+            show_interactive=False
+        )
+        
+        # 2. Detection scores distribution
+        print("\n2. Creating detection scores distribution...")
+        visualize_detection_scores_distribution(
+            scores, y_true,
+            save_path=os.path.join(output_dir, 'detection_scores_distribution.png'),
+            show_interactive=False
+        )
+        
+        # 3. Detected anomalies
+        print("\n3. Creating detected anomalies visualization...")
+        visualize_detected_anomalies(
+            clean_data, adversarial_data, scores, y_true,
+            save_path=os.path.join(output_dir, 'detected_anomalies.png'),
+            show_interactive=False
+        )
+        
+        # 4. Perturbation analysis
+        print("\n4. Creating perturbation analysis...")
+        visualize_perturbation_analysis(
+            clean_data, adversarial_data,
+            save_path=os.path.join(output_dir, 'perturbation_analysis.png'),
+            show_interactive=False
+        )
+        
+        print("\n" + "=" * 60)
+        print("✓ Comprehensive qualitative analysis completed!")
+        print(f"✓ All visualizations saved to '{output_dir}' directory")
+        print("=" * 60)
 
 
 if __name__ == "__main__":
@@ -385,7 +524,7 @@ if __name__ == "__main__":
     scores = np.random.normal(0, 1, n_samples)
     y_true = np.random.randint(0, 2, n_samples)
     
-    # Create visualizations
-    create_comprehensive_qualitative_analysis(
+    # Create interactive visualizations
+    create_interactive_visualization_app(
         clean_data, adversarial_data, true_labels, adv_predictions, scores, y_true
     ) 

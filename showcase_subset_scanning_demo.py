@@ -225,6 +225,9 @@ def showcase_complete_workflow():
     print("-" * 40)
     
     print("Creating qualitative visualizations...")
+    print("📱 Interactive mode: Each visualization will open in a separate window.")
+    print("   Close each window to proceed to the next visualization.")
+    print()
     
     # Create comprehensive qualitative analysis
     create_comprehensive_qualitative_analysis(
@@ -234,7 +237,8 @@ def showcase_complete_workflow():
         adv_predictions=adv_preds,
         scores=scores_raw,  # Use raw pixel scores for visualization
         y_true=y_true_anomaly,
-        output_dir='qualitative_visualizations'
+        output_dir='qualitative_visualizations',
+        interactive_mode=True  # Enable interactive display
     )
     
     # Visualize results (quantitative)
