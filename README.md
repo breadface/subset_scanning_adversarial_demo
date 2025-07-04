@@ -232,18 +232,14 @@ All visualizations are displayed interactively in separate windows, allowing you
 - **Magnified perturbations** to highlight imperceptible changes
 - **Perturbation statistics** (L∞ and L2 norms)
 
-![Original vs Adversarial Images](screenshots/original_vs_adversarial_screenshot.png)
-
-*This visualization shows how subtle adversarial perturbations can be. The top row displays original images, the second row shows adversarial examples, the third row reveals the perturbation patterns, and the bottom row magnifies these perturbations for visibility.*
+*See the Visual Showcase section above for an example of this visualization.*
 
 ### 2. Detection Score Analysis
 - **Score distributions** for clean vs adversarial samples
 - **Box plots and violin plots** showing separation
 - **ROC curves** demonstrating detection performance
 
-![Detection Score Analysis](screenshots/detection_scores_screenshot.png)
-
-*This analysis demonstrates how well the subset scanning detector separates clean from adversarial samples. The histograms, box plots, and ROC curve show the effectiveness of the detection approach.*
+*See the Visual Showcase section above for an example of this analysis.*
 
 ### 3. Detected Anomalies
 - **True positives**: Adversarial images correctly detected
@@ -257,9 +253,7 @@ All visualizations are displayed interactively in separate windows, allowing you
 - **Perturbation variance** highlighting consistent vs random changes
 - **Pixel-level analysis** of where perturbations occur most
 
-![Perturbation Analysis](screenshots/perturbation_analysis_screenshot.png)
-
-*This analysis reveals the systematic patterns in adversarial attacks, showing which image regions are most vulnerable and the statistical properties of perturbations across the dataset.*
+*See the Visual Showcase section above for an example of this analysis.*
 
 ## 🛠️ Usage Examples
 
