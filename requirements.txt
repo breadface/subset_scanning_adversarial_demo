@@ -1,0 +1,35 @@
+# Core subset scanning library
+art>=1.18.0
+
+# Deep learning frameworks (choose one or both)
+tensorflow>=2.10.0
+# torch>=1.12.0  # Uncomment if you prefer PyTorch
+
+# Scientific computing and data manipulation
+numpy>=1.21.0
+scipy>=1.9.0
+pandas>=1.5.0
+
+# Visualization
+matplotlib>=3.5.0
+seaborn>=0.11.0
+
+# Machine learning utilities
+scikit-learn>=1.1.0
+
+# Testing
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# Development tools
+black>=22.0.0
+flake8>=5.0.0
+mypy>=0.991
+
+# Jupyter notebook support (optional)
+jupyter>=1.0.0
+ipykernel>=6.0.0
+
+# Additional utilities
+tqdm>=4.64.0
+click>=8.0.0 
