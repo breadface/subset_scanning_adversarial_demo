@@ -10,6 +10,7 @@ This demo implements the complete workflow for detecting adversarial examples us
 2. **Mixed Dataset Creation**: Hide adversarial samples within clean data (simulating real-world scenarios)
 3. **Subset Scanning Detection**: Use ART's `SubsetScanningDetector` to identify the anomalous subgroup
 4. **Performance Evaluation**: Comprehensive metrics and visualizations
+5. **Qualitative Analysis**: Visual evidence of subtle perturbations and detection results
 
 ## 🚀 Quick Start
 
@@ -34,7 +35,7 @@ python src/models/cnn_model.py
 python showcase_subset_scanning_demo.py
 ```
 
-This will demonstrate the complete workflow and generate visualizations showing the detection results.
+This will demonstrate the complete workflow and generate both quantitative and qualitative visualizations.
 
 ## 📊 What You'll See
 
@@ -44,7 +45,8 @@ The showcase demonstrates:
 - **Hidden Adversarial Detection**: Subset scanning finds adversarial samples even when they're mixed with clean data
 - **Performance Comparison**: Raw pixels vs. feature-based detection
 - **Comprehensive Metrics**: ROC AUC, precision, recall, F1-score
-- **Visualizations**: Score distributions, ROC curves, confusion matrices
+- **Quantitative Visualizations**: Score distributions, ROC curves, confusion matrices
+- **Qualitative Visualizations**: Original vs adversarial images, perturbation patterns, detected anomalies
 
 ## 🏗️ Project Structure
 
@@ -63,6 +65,9 @@ The showcase demonstrates:
 │   │   ├── subset_evaluation.py    # Evaluation and visualization
 │   │   ├── simple_subset_scanning_demo.py  # Simple demo
 │   │   └── run_subset_scanning_demo.py     # Comprehensive demo
+│   ├── visualization/
+│   │   ├── qualitative_analysis.py # Qualitative visualizations
+│   │   └── __init__.py
 │   └── utils/
 │       ├── art_utils.py            # ART classifier utilities
 │       └── data_utils.py           # Data preparation utilities
@@ -87,7 +92,13 @@ The showcase demonstrates:
 - Confusion matrices
 - Score distribution visualization
 
-### 4. ART Integration
+### 4. Qualitative Visualization
+- **Original vs Adversarial**: Side-by-side comparison showing subtle perturbations
+- **Perturbation Analysis**: Statistical analysis of perturbation patterns
+- **Detected Anomalies**: Visualization of images identified as anomalous
+- **Score Distribution**: Analysis of detection scores across clean and adversarial samples
+
+### 5. ART Integration
 - Seamless integration with ART's `SubsetScanningDetector`
 - PyTorch model compatibility
 - Configurable detection parameters
@@ -125,6 +136,8 @@ PHASE 4: Running Subset Scanning Detection
 ✓ Raw pixel detection completed!
 ✓ Feature-based detection completed!
 
+PHASE 5: Evaluation and Visualization
+----------------------------------------
 DETECTION PERFORMANCE COMPARISON
 ============================================================
 Metric               Raw Pixels      Features        
@@ -135,8 +148,42 @@ F1 Score             0.723           0.789
 Precision            0.689           0.756           
 Recall               0.760           0.823           
 
+PHASE 6: Qualitative Visualization
+----------------------------------------
+✓ Original vs adversarial visualization saved
+✓ Detection scores distribution saved
+✓ Detected anomalies visualization saved
+✓ Perturbation analysis saved
+
 🎯 SUCCESS: Subset scanning successfully detected the hidden adversarial subgroup!
 ```
+
+## 🖼️ Qualitative Visualizations
+
+The showcase generates several qualitative visualizations that provide intuitive understanding:
+
+### 1. Original vs Adversarial Images
+- **Side-by-side comparison** of clean and perturbed images
+- **Perturbation visualization** showing the subtle differences
+- **Magnified perturbations** to highlight imperceptible changes
+- **Perturbation statistics** (L∞ and L2 norms)
+
+### 2. Detection Score Analysis
+- **Score distributions** for clean vs adversarial samples
+- **Box plots and violin plots** showing separation
+- **ROC curves** demonstrating detection performance
+
+### 3. Detected Anomalies
+- **True positives**: Adversarial images correctly detected
+- **False positives**: Clean images incorrectly flagged
+- **Score rankings**: Top detected anomalies
+- **Threshold analysis**: Detection boundary visualization
+
+### 4. Perturbation Analysis
+- **Statistical patterns** across the dataset
+- **Average perturbation patterns** showing systematic changes
+- **Perturbation variance** highlighting consistent vs random changes
+- **Pixel-level analysis** of where perturbations occur most
 
 ## 🛠️ Usage Examples
 
@@ -170,6 +217,16 @@ detector = SubsetScanningDetector(classifier, window_size=784)
 scores, p_values, scan_stats = detector.detect(x_combined_flat)
 ```
 
+### Qualitative Visualization
+```python
+from src.visualization.qualitative_analysis import create_comprehensive_qualitative_analysis
+
+create_comprehensive_qualitative_analysis(
+    clean_data, adversarial_data, true_labels, adv_predictions, 
+    scores, y_true, output_dir='my_visualizations'
+)
+```
+
 ## 📚 Technical Details
 
 ### Subset Scanning Algorithm
@@ -187,6 +244,12 @@ scores, p_values, scan_stats = detector.detect(x_combined_flat)
 - **PR AUC**: Area under the precision-recall curve
 - **F1 Score**: Harmonic mean of precision and recall
 - **Confusion Matrix**: Detailed classification results
+
+### Visualization Features
+- **Multi-panel layouts**: Comprehensive analysis in single figures
+- **Color-coded results**: Intuitive distinction between clean and adversarial
+- **Statistical overlays**: Thresholds, confidence intervals, and distributions
+- **High-resolution output**: Publication-ready visualizations
 
 ## 🤝 Contributing
 

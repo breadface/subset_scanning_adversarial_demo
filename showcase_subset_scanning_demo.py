@@ -33,6 +33,7 @@ from scanning.subset_evaluation import (
 )
 from utils.art_utils import create_art_classifier, extract_features_from_layer
 from utils.data_utils import prepare_mixed_dataset_for_scanning
+from visualization.qualitative_analysis import create_comprehensive_qualitative_analysis
 
 
 def showcase_complete_workflow():
@@ -216,8 +217,28 @@ def showcase_complete_workflow():
     print(f"{'Precision':<20} {raw_results['precision']:<15.4f} {feature_results['precision']:<15.4f}")
     print(f"{'Recall':<20} {raw_results['recall']:<15.4f} {feature_results['recall']:<15.4f}")
     
-    # Visualize results
-    print("\nGenerating visualizations...")
+    # ============================================================================
+    # Phase 6: Qualitative Visualization
+    # ============================================================================
+    print("\n" + "=" * 80)
+    print("PHASE 6: Qualitative Visualization")
+    print("-" * 40)
+    
+    print("Creating qualitative visualizations...")
+    
+    # Create comprehensive qualitative analysis
+    create_comprehensive_qualitative_analysis(
+        clean_data=test_data.numpy(),
+        adversarial_data=adv_data,
+        true_labels=test_labels.numpy(),
+        adv_predictions=adv_preds,
+        scores=scores_raw,  # Use raw pixel scores for visualization
+        y_true=y_true_anomaly,
+        output_dir='qualitative_visualizations'
+    )
+    
+    # Visualize results (quantitative)
+    print("\nGenerating quantitative visualizations...")
     
     # Raw pixel detection results
     visualize_detection_results(
@@ -239,7 +260,7 @@ def showcase_complete_workflow():
     print_detection_summary(feature_results)
     
     # ============================================================================
-    # Phase 6: Showcase Summary
+    # Phase 7: Showcase Summary
     # ============================================================================
     print("\n" + "=" * 80)
     print("SHOWCASE SUMMARY")
@@ -259,6 +280,11 @@ def showcase_complete_workflow():
     print("Files generated:")
     print("  • detection_results.png - Raw pixel detection visualization")
     print("  • detection_results.png - Feature-based detection visualization")
+    print("  • qualitative_visualizations/ - Directory with qualitative analysis")
+    print("    - original_vs_adversarial.png - Subtle perturbation visualization")
+    print("    - detection_scores_distribution.png - Score analysis")
+    print("    - detected_anomalies.png - Anomaly detection examples")
+    print("    - perturbation_analysis.png - Perturbation pattern analysis")
     print("=" * 80)
 
 
