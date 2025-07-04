@@ -6,6 +6,7 @@ git+https://github.com/breadface/anomalous_subgroup_detection.git
 # Deep learning frameworks (choose one or both)
 tensorflow>=2.10.0
 # torch>=1.12.0  # Uncomment if you prefer PyTorch
+torchvision>=0.15.0  # Required for dataset loading
 
 # Scientific computing and data manipulation
 numpy>=1.21.0

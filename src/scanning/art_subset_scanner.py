@@ -5,33 +5,9 @@ ART Subset Scanning Detector for adversarial detection.
 import numpy as np
 import torch
 from art.defences.detector.evasion import SubsetScanningDetector
-from art.estimators.classification import PyTorchClassifier
+from utils.art_utils import create_art_classifier
 import torch.nn as nn
 import os
-
-
-def create_art_classifier(model, device='cpu'):
-    """
-    Create an ART classifier from a PyTorch model.
-    
-    Args:
-        model: PyTorch model
-        device (str): Device to run on
-        
-    Returns:
-        PyTorchClassifier: ART classifier
-    """
-    criterion = nn.CrossEntropyLoss()
-    
-    art_classifier = PyTorchClassifier(
-        model=model,
-        loss=criterion,
-        input_shape=(1, 28, 28),  # MNIST shape
-        nb_classes=10,
-        device_type=device
-    )
-    
-    return art_classifier
 
 
 def run_subset_scanning_detection(model, clean_data, adversarial_data, 

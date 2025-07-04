@@ -6,7 +6,7 @@ import torch
 import torch.nn as nn
 import numpy as np
 from art.attacks.evasion import FastGradientMethod
-from art.estimators.classification import PyTorchClassifier
+from utils.art_utils import create_art_classifier
 import matplotlib.pyplot as plt
 import os
 
@@ -44,32 +44,6 @@ class ARTModelWrapper:
             x_tensor = torch.FloatTensor(x).to(self.device)
             outputs = self.model(x_tensor)
             return outputs.cpu().numpy()
-
-
-def create_art_classifier(model, device='cpu'):
-    """
-    Create an ART classifier from a PyTorch model.
-    
-    Args:
-        model: PyTorch model
-        device (str): Device to run on
-        
-    Returns:
-        PyTorchClassifier: ART classifier
-    """
-    # Define loss function
-    criterion = nn.CrossEntropyLoss()
-    
-    # Create ART classifier
-    art_classifier = PyTorchClassifier(
-        model=model,
-        loss=criterion,
-        input_shape=(1, 28, 28),  # MNIST shape
-        nb_classes=10,
-        device_type=device
-    )
-    
-    return art_classifier
 
 
 def generate_fgsm_attack(model, data, labels, eps=0.3, device='cpu'):
